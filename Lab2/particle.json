@@ -1,0 +1,11 @@
+{
+    "number": [30, 60], 
+    "size": [50, 250],
+    "lifetime": 300,
+    "center": [-600, 600],
+    "velocity": [-10, 10],
+    "fade": 1,
+    "shrink": 50,
+    "generateAfter": 60,
+    "fireworks": [true, 0.0, 1.0]
+}

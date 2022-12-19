@@ -1,7 +1,7 @@
 {
     "textures": {
-        "wall": "tex/sea.bmp",
-        "floor": "tex/index.bmp"
+        "wall": "tex/wall.bmp",
+        "floor": "tex/floor.bmp"
     },
     "flags": {
         "invisible": false,
@@ -10,6 +10,6 @@
     },
     "maze": {
         "depth": 50,
-        "width": 50
+        "width": 20
     }
 }

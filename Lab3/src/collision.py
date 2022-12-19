@@ -19,7 +19,6 @@ class Collision:
 
                 wallX = (col * (cubeSize * -1))
 
-                # collision with cube
                 if ((z == wallZ) or ((z > (wallZ - hitBox)) and (z < (wallZ + hitBox)))) and \
                    ((x == wallX) or ((x > (wallX - hitBox)) and (x < (wallX + hitBox)))):
                     return True

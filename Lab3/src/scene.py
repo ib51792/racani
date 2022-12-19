@@ -84,12 +84,10 @@ class Scene:
             for j in i:
                 if (j == 1): self.cube.draw(self.textureID['wall'])
                 
-                # move to right by one cube
                 glTranslatef(self.cubeSize, 0.0, 0.0)
 
                 col += 1
 
-            # reset position before starting next row
             glTranslatef(((self.cubeSize * col) * -1), 0.0, self.cubeSize)
 
             row += 1
@@ -103,8 +101,6 @@ class Scene:
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
 
-    # Set up the current maze view.
-    # Reset position to zero, rotate around y-axis, restore position.
         glTranslatef(0.0, 0.0, 0.0)
         glRotatef(self.cameraRotation, 0.0, self.controls, 0.0)
         glTranslatef(self.cameraPosition[0], self.cameraPosition[1], self.cameraPosition[2])
@@ -150,7 +146,6 @@ class Scene:
         elif keyboard.is_pressed("h"): 
             iX, iZ = getIntendedPosition(self.cameraRotation, iX, iZ, 0, -1)
 
-        # move camera if there are no walls in the way
         if self.flags['invisible'] or not (self.collision.testCollision(self.maze, iX, iZ)):
             self.cameraPosition = [iX, 0, iZ]
         
@@ -187,7 +182,6 @@ class Scene:
         glutAddMenuEntry('Exit', 1)
         glutAddMenuEntry('Invisible', 2)
         glutAddMenuEntry('Floor', 3)
-        glutAddSubMenu('Control', 10)
         glutAddMenuEntry('Movement', 4)
         glutAddMenuEntry('Walls', 5)
         glutAttachMenu(GLUT_RIGHT_BUTTON)

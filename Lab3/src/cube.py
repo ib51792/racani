@@ -18,25 +18,25 @@ class Cube:
 
         glBegin(GL_QUADS)
         
-        #front side
+        # front side
         glTexCoord2f(0.0, 0.0); glVertex3f(-1.0, -1.0,  1.0)
         glTexCoord2f(1.0, 0.0); glVertex3f( 1.0, -1.0,  1.0)
         glTexCoord2f(1.0, 1.0); glVertex3f( 1.0,  1.0,  1.0)
         glTexCoord2f(0.0, 1.0); glVertex3f(-1.0,  1.0,  1.0)
         
-        #back side
+        # back side
         glTexCoord2f(1.0, 0.0); glVertex3f(-1.0, -1.0, -1.0)
         glTexCoord2f(1.0, 1.0); glVertex3f(-1.0,  1.0, -1.0)
         glTexCoord2f(0.0, 1.0); glVertex3f( 1.0,  1.0, -1.0)
         glTexCoord2f(0.0, 0.0); glVertex3f( 1.0, -1.0, -1.0)
         
-        #right side
+        # right side
         glTexCoord2f(1.0, 0.0); glVertex3f( 1.0, -1.0, -1.0)
         glTexCoord2f(1.0, 1.0); glVertex3f( 1.0,  1.0, -1.0)
         glTexCoord2f(0.0, 1.0); glVertex3f( 1.0,  1.0,  1.0)
         glTexCoord2f(0.0, 0.0); glVertex3f( 1.0, -1.0,  1.0)
         
-        #left side
+        # left side
         glTexCoord2f(0.0, 0.0); glVertex3f(-1.0, -1.0, -1.0)
         glTexCoord2f(1.0, 0.0); glVertex3f(-1.0, -1.0,  1.0)
         glTexCoord2f(1.0, 1.0); glVertex3f(-1.0,  1.0,  1.0)

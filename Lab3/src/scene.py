@@ -110,7 +110,7 @@ class Scene:
         
             glTranslatef(0.0, -2.0, 0.0)
             glScalef(self._json['maze']['width'] * 2.5, 1.0, self._json['maze']['depth'] * 2.5)
-            self.plane.draw(self.textureID['floor'], 40.0)
+            self.plane.draw(self.textureID['floor'])
         
             glPopMatrix()
 

@@ -112,7 +112,7 @@ class Scene:
         glEndList()
 
 
-    def drawScene(self):
+    def draw(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
 
@@ -166,7 +166,6 @@ class Scene:
                 self.flags['invisible'] ^= 1
             case 3:
                 self.flags['floor'] ^= 1
-                self.renderFloor()
             case 4:
                 self.controls *= -1
             case 5:
@@ -195,7 +194,7 @@ class Scene:
         self.textureID['wall'] = texture.getID(self.texture['wall'])
         self.textureID['floor'] = texture.getID(self.texture['floor'])
 
-        glutDisplayFunc(self.drawScene)
-        glutIdleFunc(self.drawScene)
+        glutDisplayFunc(self.draw)
+        glutIdleFunc(self.draw)
         self.initGL()
         glutMainLoop()

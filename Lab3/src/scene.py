@@ -52,7 +52,7 @@ class Scene:
             ]
         
         self.cameraRotation = 0.0
-        self.rotationAngle = 2.0
+        self.rotationAngle = 1.0
         self.controls = 1.0
         self.window = None
         self.cubeSize = 2
@@ -70,6 +70,24 @@ class Scene:
         glLoadIdentity()
         gluPerspective(50.0, self.width / self.height, 0.1, 100.0)
         glMatrixMode(GL_MODELVIEW)
+        self.renderFloor()
+        self.renderMaze()
+
+
+    def renderFloor(self):
+        self.rendered['floor'] = glGenLists(1)
+        glNewList(self.rendered['floor'], GL_COMPILE)
+        
+        glPushMatrix()
+        
+        glTranslatef(0.0, -2.0, 0.0)
+        glScalef(self._json['maze']['width'] * 2.5, 1.0, self._json['maze']['depth'] * 2.5)
+        self.plane.draw(self.textureID['floor'])
+        
+        glPopMatrix()
+        
+        glEndList()
+
 
     def renderMaze(self):
         self.rendered['wall'] = glGenLists(1)
@@ -97,6 +115,7 @@ class Scene:
         
         glEndList()
 
+
     def drawScene(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
@@ -106,18 +125,7 @@ class Scene:
         glTranslatef(self.cameraPosition[0], self.cameraPosition[1], self.cameraPosition[2])
             
         if self.flags['floor']:
-            glPushMatrix()
-        
-            glTranslatef(0.0, -2.0, 0.0)
-            glScalef(self._json['maze']['width'] * 2.5, 1.0, self._json['maze']['depth'] * 2.5)
-            self.plane.draw(self.textureID['floor'])
-        
-            glPopMatrix()
-
-        # maze
-        if self.firstRender['wall']:
-            self.firstRender['wall'] ^= 1
-            self.renderMaze()
+            glCallList(self.rendered['floor'])
             
         glCallList(self.rendered['wall'])
         
@@ -162,6 +170,7 @@ class Scene:
                 self.flags['invisible'] ^= 1
             case 3:
                 self.flags['floor'] ^= 1
+                self.renderFloor()
             case 4:
                 self.controls *= -1
             case 5:

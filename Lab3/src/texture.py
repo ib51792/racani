@@ -23,6 +23,8 @@ class Texture:
         # Sets the index of the highest defined mipmap level. Initial value is 1000
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0)
         
+        # describes image
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imgSize[0], imgSize[1], 0, GL_RGB, GL_UNSIGNED_BYTE, imageData)
         
+        # return texture id for later use
         return textureID

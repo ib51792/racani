@@ -19,10 +19,6 @@ class Scene:
         self.collision = Collision()
         self.plane = Plane()
         self.cube = Cube()
-        self.firstRender = {
-            "wall": True,
-            "floor": True
-            }
         
         self.rendered = {
             "wall": None,

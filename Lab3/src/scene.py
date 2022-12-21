@@ -214,6 +214,7 @@ class Scene:
                 
         return 0
     
+    
     def main(self):
         glutInit()
         glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)

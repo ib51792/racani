@@ -36,7 +36,7 @@ class Path:
         startPosition = grid.node(start[1], start[0])
         endPosition = grid.node(end[1], end[0])
         
-        finder = AStarFinder(diagonal_movement=DiagonalMovement.always)
+        finder = AStarFinder()
         path, _ = finder.find_path(startPosition, endPosition, grid)
         
         return path

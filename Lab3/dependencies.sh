@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 
-d=("keyboard" "PyOpenGL" "PyOpenGL_accelerate")
+d=("keyboard" "PyOpenGL" "PyOpenGL_accelerate" "pathfinding")
 
 for str in ${d[@]}; do
   pip3 install $str

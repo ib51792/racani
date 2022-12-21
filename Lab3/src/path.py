@@ -5,7 +5,6 @@ from pathfinding.finder.a_star import AStarFinder
 
 class Path:
     def __init__(self, maze):
-        self.path = None
         self.maze = maze
         
         

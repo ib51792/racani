@@ -1,13 +1,14 @@
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
-import keyboard
+import keyboard, copy
 from src.collision import Collision
 from src.cube import Cube
 from src.maze import Maze
 from src.movement import getIntendedPosition
 from src.texture import Texture
 from src.plane import Plane
+from src.path import Path
 
 
 class Scene:
@@ -19,26 +20,31 @@ class Scene:
         self.collision = Collision()
         self.plane = Plane()
         self.cube = Cube()
+        self.path = Path(copy.deepcopy(self.maze)).find()
         
         self.rendered = {
             "wall": None,
-            "floor": None
+            "floor": None,
+            "path": None
             }
         
         self.texture = {
             "wall": _json['textures']['wall'],
             "floor": _json['textures']['floor'],
+            "path": _json['textures']['path']
             }
         
         self.textureID = {
             "wall": None,
-            "floor": None
+            "floor": None,
+            "path": None
             }
         
         self.flags = {
             "invisible": _json['flags']['invisible'],
             "floor": _json['flags']['floor'],
-            "wall": _json['flags']['wall']
+            "wall": _json['flags']['wall'],
+            "path": _json['flags']['path']
             }
         
         self.cameraPosition = [
@@ -68,6 +74,35 @@ class Scene:
         glMatrixMode(GL_MODELVIEW)
         self.renderFloor()
         self.renderMaze()
+        self.renderPath()
+
+
+    def renderPath(self):
+        self.rendered['path'] = glGenLists(1)
+        glNewList(self.rendered['path'], GL_COMPILE)
+        
+        glPushMatrix()
+        glTranslatef(0.0, -1.999, 0.0)
+        row, col = (0, 0)
+        
+        for v, i in enumerate(self.maze):
+            for v2, _ in enumerate(i):
+                if ((v2, v) in self.path):
+                    self.path.remove((v2, v))
+                    self.plane.draw(self.textureID['path'])
+                
+                glTranslatef(self.cubeSize, 0.0, 0.0)
+
+                col += 1
+
+            glTranslatef(((self.cubeSize * col) * -1), 0.0, self.cubeSize)
+
+            row += 1
+            col = 0
+            
+        glPopMatrix()
+        
+        glEndList()
 
 
     def renderFloor(self):
@@ -125,6 +160,9 @@ class Scene:
             
         glCallList(self.rendered['wall'])
         
+        if self.flags['path']:
+            glCallList(self.rendered['path'])
+        
         glutSwapBuffers()
     
         self.handleInput()
@@ -169,8 +207,10 @@ class Scene:
             case 4:
                 self.controls *= -1
             case 5:
-                self.flags['wall'] = 1000 if self.flags['wall'] == 1 else 1
+                self.flags['wall'] = self._json["flags"]["wall"] if self.flags['wall'] == 1 else 1
                 self.renderMaze()
+            case 6:
+                self.flags['path'] ^= 1
                 
         return 0
     
@@ -188,12 +228,14 @@ class Scene:
         glutAddMenuEntry('Floor', 3)
         glutAddMenuEntry('Movement', 4)
         glutAddMenuEntry('Walls', 5)
+        glutAddMenuEntry('Path', 6)
         glutAttachMenu(GLUT_RIGHT_BUTTON)
 
         texture = Texture()
         self.textureID['wall'] = texture.getID(self.texture['wall'])
         self.textureID['floor'] = texture.getID(self.texture['floor'])
-
+        self.textureID['path'] = texture.getID(self.texture['path'])
+        
         glutDisplayFunc(self.draw)
         glutIdleFunc(self.draw)
         self.initGL()

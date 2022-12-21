@@ -1,12 +1,14 @@
 {
     "textures": {
         "wall": "tex/wall.bmp",
-        "floor": "tex/floor.bmp"
+        "floor": "tex/floor.bmp",
+        "path": "tex/path.jpg"
     },
     "flags": {
         "invisible": false,
         "floor": true,
-        "wall": 500
+        "wall": 500,
+        "path": false
     },
     "maze": {
         "depth": 50,

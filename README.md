@@ -1,6 +1,6 @@
 # Računalna animacija
 
-Tema samostalne vježbe (Lab3) je generiranje labirinta nasumičnim Primovim algoritmom.
+Tema samostalne vježbe (Lab3) je generiranje labirinta randomiziranim Primovim algoritmom.
 
 Par stvari koje se koriste u vježbi:
 

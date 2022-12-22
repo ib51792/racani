@@ -5,13 +5,13 @@ Tema samostalne vježbe (Lab3) je generiranje labirinta nasumičnim Primovim alg
 Par stvari koje se koriste u vježbi:
 
  - kretanje po 3D prostoru
- - praktična uporaba [Nasumičnog Primovog algoritma](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_Prim%27s_algorithm)
+ - praktična uporaba [Randomiziranog Primovog algoritma](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_Prim%27s_algorithm)
  - detekcija sudara
  - menu
 
 # Pokretanje vježbe
 
-Za pokretanje vježbe potrebna je verzija Pythona >=3.10.0. OpenGL te keyboard knjižnica.
+Za pokretanje vježbe potrebna je verzija Pythona >=3.10.0. OpenGL, pathfinder i keyboard knjižnice.
 
 ## Provjera i instalacija potrebnih alata
 

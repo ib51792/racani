@@ -1,7 +1,7 @@
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
-import keyboard, copy
+import keyboard
 from src.collision import Collision
 from src.cube import Cube
 from src.maze import Maze
@@ -20,7 +20,7 @@ class Scene:
         self.collision = Collision()
         self.plane = Plane()
         self.cube = Cube()
-        self.path = Path(copy.deepcopy(self.maze)).find()
+        self.path = Path(self.maze).find()
         
         self.rendered = {
             "wall": None,

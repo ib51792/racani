@@ -4,31 +4,12 @@ from pathfinding.finder.a_star import AStarFinder
 
 class Path:
     def __init__(self, maze):
-        self.maze = maze
+        self.maze = [[ 1 ^ j  for j in i] for i in maze]
         
         
     def find(self):
-        i, j = (0, 0)
-        
-        for j, v in enumerate(self.maze[0]):
-                if v == 0: break
-        
-        end = [i, j]
-        
-        i = len(self.maze) - 1
-        
-        for j, v in enumerate(self.maze[-1]):
-                if v == 0: break
-                
-        start = [i, j]
-        
-        for i, v in enumerate(self.maze):
-            for j, v2 in enumerate(v):
-                if v2 == 1:
-                    self.maze[i][j] = 0
-                else:
-                    self.maze[i][j] = 1
-        
+        end = (0, self.maze[0].index(1))
+        start = ((len(self.maze) - 1), self.maze[-1].index(1))   
         
         grid = Grid(matrix=self.maze)
         

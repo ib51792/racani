@@ -16,4 +16,6 @@ class Path:
         startPosition = grid.node(start[1], start[0])
         endPosition = grid.node(end[1], end[0])
         
-        return AStarFinder().find_path(startPosition, endPosition, grid)
+        path, _ = AStarFinder().find_path(startPosition, endPosition, grid)
+        
+        return path, start[1]

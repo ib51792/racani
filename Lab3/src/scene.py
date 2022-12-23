@@ -13,11 +13,19 @@ import keyboard
 
 class Scene:
     def __init__(self, _json):
+        self.cameraRotation = 0.0
+        self.rotationAngle = 1.0
+        self.controls = 1.0
+        self.window = None
+        self.cubeSize = 2
+        self.height = 480
+        self.width = 640
+        
         self._json = _json
         self.maze = Maze(_json['maze']['depth'], 
                          _json['maze']['width']).generate()
         
-        self.path, _ = Path(self.maze).find()
+        self.path, self.start = Path(self.maze).find()
         self.collision = Collision()
         self.plane = Plane()
         self.cube = Cube()
@@ -48,18 +56,10 @@ class Scene:
             }
         
         self.cameraPosition = [
-            -2 * _json['maze']['width'] + 5, 
+            (self.cubeSize * (self.start * -1)),
             0.0, 
-            -2 * _json['maze']['depth'] - 5
+            ((self.cubeSize * (_json['maze']['depth'] * -1)) - 2)
             ]
-        
-        self.cameraRotation = 0.0
-        self.rotationAngle = 1.0
-        self.controls = 1.0
-        self.window = None
-        self.cubeSize = 2
-        self.height = 480
-        self.width = 640
         
         
     def initGL(self):    

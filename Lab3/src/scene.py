@@ -1,14 +1,14 @@
-from OpenGL.GL import *
-from OpenGL.GLUT import *
-from OpenGL.GLU import *
-import keyboard
-from src.collision import Collision
-from src.cube import Cube
-from src.maze import Maze
 from src.movement import getIntendedPosition
+from src.collision import Collision
 from src.texture import Texture
 from src.plane import Plane
 from src.path import Path
+from src.cube import Cube
+from src.maze import Maze
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
+from OpenGL.GL import *
+import keyboard
 
 
 class Scene:
@@ -17,10 +17,10 @@ class Scene:
         self.maze = Maze(_json['maze']['depth'], 
                          _json['maze']['width']).generate()
         
+        self.path, _ = Path(self.maze).find()
         self.collision = Collision()
         self.plane = Plane()
         self.cube = Cube()
-        self.path = Path(self.maze).find()
         
         self.rendered = {
             "wall": None,
@@ -82,26 +82,21 @@ class Scene:
         glNewList(self.rendered['path'], GL_COMPILE)
         
         glPushMatrix()
+        # needs to be a little bit above floor
         glTranslatef(0.0, -1.999, 0.0)
-        row, col = (0, 0)
         
-        for v, i in enumerate(self.maze):
-            for v2, _ in enumerate(i):
-                if ((v2, v) in self.path):
-                    self.path.remove((v2, v))
+        nextRow = self.cubeSize * (len(self.maze[0]) * -1)
+        
+        for j, v in enumerate(self.maze):
+            for i, _ in enumerate(v):
+                if ((i, j) in self.path):
+                    self.path.remove((i, j))
                     self.plane.draw(self.textureID['path'])
-                
                 glTranslatef(self.cubeSize, 0.0, 0.0)
 
-                col += 1
-
-            glTranslatef(((self.cubeSize * col) * -1), 0.0, self.cubeSize)
-
-            row += 1
-            col = 0
+            glTranslatef(nextRow, 0.0, self.cubeSize)
             
         glPopMatrix()
-        
         glEndList()
 
 
@@ -109,14 +104,16 @@ class Scene:
         self.rendered['floor'] = glGenLists(1)
         glNewList(self.rendered['floor'], GL_COMPILE)
         
+        width = self._json['maze']['width'] * self.cubeSize * 1.1
+        depth = self._json['maze']['depth'] * self.cubeSize * 1.1
+        
         glPushMatrix()
         
         glTranslatef(0.0, -2.0, 0.0)
-        glScalef(self._json['maze']['width'] * 2.5, 1.0, self._json['maze']['depth'] * 2.5)
+        glScalef(width, 1.0, depth)
         self.plane.draw(self.textureID['floor'])
-        
+       
         glPopMatrix()
-        
         glEndList()
 
 
@@ -125,25 +122,18 @@ class Scene:
         glNewList(self.rendered['wall'], GL_COMPILE)
         
         glPushMatrix()
-        
         glScalef(1.0, self.flags['wall'], 1.0)
-        row, col = (0, 0)
+        
+        nextRow = self.cubeSize * (len(self.maze[0]) * -1)
     
         for i in self.maze:
             for j in i:
-                if (j == 1): self.cube.draw(self.textureID['wall'])
-                
+                if j: self.cube.draw(self.textureID['wall'])
                 glTranslatef(self.cubeSize, 0.0, 0.0)
-
-                col += 1
-
-            glTranslatef(((self.cubeSize * col) * -1), 0.0, self.cubeSize)
-
-            row += 1
-            col = 0
+                
+            glTranslatef(nextRow, 0.0, self.cubeSize)
             
         glPopMatrix()
-        
         glEndList()
 
 
@@ -158,10 +148,10 @@ class Scene:
         if self.flags['floor']:
             glCallList(self.rendered['floor'])
             
-        glCallList(self.rendered['wall'])
-        
         if self.flags['path']:
             glCallList(self.rendered['path'])
+            
+        glCallList(self.rendered['wall'])
         
         glutSwapBuffers()
     
@@ -195,7 +185,7 @@ class Scene:
             glutDestroyWindow(self.window) 
     
     
-    def JoinStyle(self, val):
+    def menu(self, val):
     
         match val:
             case 1:
@@ -223,7 +213,7 @@ class Scene:
 
         self.window = glutCreateWindow('Random Maze')
     
-        glutCreateMenu(self.JoinStyle)
+        glutCreateMenu(self.menu)
         glutAddMenuEntry('Exit', 1)
         glutAddMenuEntry('Invisible', 2)
         glutAddMenuEntry('Floor', 3)

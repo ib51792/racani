@@ -181,8 +181,8 @@ class Scene:
         if self.flags['invisible'] or not (self.collision.testCollision(self.maze, iX, iZ)):
             self.cameraPosition = [iX, 0, iZ]
         
-        if self.cameraPosition[2] >= 1.6:
-            glutDestroyWindow(self.window) 
+        #if self.cameraPosition[2] >= 1.6:
+        #    glutDestroyWindow(self.window) 
     
     
     def menu(self, val):

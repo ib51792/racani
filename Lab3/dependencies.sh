@@ -23,3 +23,13 @@ then
 else
     echo -e "\nInvalid version ${version}"
 fi
+
+if [[ "$treeFidi" -gt "3100" ]]
+then 
+    pip3 install ./pyopgl/PyOpenGL-3.1.6-cp311-cp311-win_amd64.whl
+fi
+
+if [[ "$treeFidi" -lt "3110" ]]
+then 
+    pip3 install ./pyopgl/PyOpenGL-3.1.6-cp310-cp310-win_amd64.whl
+fi

@@ -11,7 +11,14 @@ Par stvari koje se koriste u vježbi:
 
 # Pokretanje vježbe
 
-Za pokretanje vježbe potrebna je verzija Pythona >=3.10.0. OpenGL, pathfinder i keyboard knjižnice.
+Za pokretanje vježbe potrebna je verzija Pythona >=3.10.0. "keyboard", "pathfinding", "image", "numpy", "colorama" knjižnice.
+
+## Install 64-bit pyopengl
+
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl
+
+lab3/pyopgl za 3.10 i 3.11
+pip install verzija pyopengl
 
 ## Provjera i instalacija potrebnih alata
 
